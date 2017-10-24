@@ -1,6 +1,8 @@
 package com.massivcode.loadmorepatterns.adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ public class DummyItemAdapter extends RecyclerView.Adapter<ViewHolder> {
   private ImageLoader mImageLoader;
 
   private boolean mIsProgress = false;
+  private Handler mHandler = new Handler(Looper.getMainLooper());
 
   @Override
   public int getItemViewType(int position) {
@@ -74,14 +77,19 @@ public class DummyItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     notifyDataSetChanged();
   }
 
-  public void addItems(ArrayList<DummyItem> items) {
-    if (mItems == null) {
-      setItems(items);
-    } else {
-      int previousLastItemPosition = mItems.size();
-      mItems.addAll(items);
-      notifyItemRangeInserted(previousLastItemPosition, mItems.size());
-    }
+  public void addItems(final ArrayList<DummyItem> items) {
+    mHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (mItems == null) {
+          setItems(items);
+        } else {
+          int oldItemLastPosition = mItems.size();
+          mItems.addAll(items);
+          notifyItemRangeInserted(oldItemLastPosition, items.size());
+        }
+      }
+    });
   }
 
   public boolean isProgress() {
@@ -91,13 +99,18 @@ public class DummyItemAdapter extends RecyclerView.Adapter<ViewHolder> {
   public void setIsProgress(boolean isProgress) {
     mIsProgress = isProgress;
 
-    if (mIsProgress) {
-      mItems.add(null);
-      notifyItemInserted(mItems.size() - 1);
-    } else {
-      mItems.remove(mItems.size() - 1);
-      notifyItemRemoved(mItems.size());
-    }
+    mHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (mIsProgress) {
+          mItems.add(null);
+          notifyItemInserted(mItems.size() - 1);
+        } else {
+          mItems.remove(mItems.size() - 1);
+          notifyItemRemoved(mItems.size());
+        }
+      }
+    });
   }
 
   static class DummyItemViewHolder extends ViewHolder {

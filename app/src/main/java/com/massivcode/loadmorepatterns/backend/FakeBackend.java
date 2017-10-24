@@ -55,6 +55,7 @@ public class FakeBackend {
 
       dummyItems.add(new DummyItem
           (
+              itemId,
               "Dummy title " + itemId,
               "Dummy Contents " + itemId,
               "Author " + itemId,

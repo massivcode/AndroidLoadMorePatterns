@@ -5,13 +5,21 @@ package com.massivcode.loadmorepatterns.models;
  */
 
 public class DummyItem {
+
+  private int id;
   private String title, contents, author, profileImageUrl;
 
-  public DummyItem(String title, String contents, String author, String profileImageUrl) {
+  public DummyItem(int id, String title, String contents, String author,
+      String profileImageUrl) {
+    this.id = id;
     this.title = title;
     this.contents = contents;
     this.author = author;
     this.profileImageUrl = profileImageUrl;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getTitle() {
