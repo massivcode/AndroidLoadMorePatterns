@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.massivcode.loadmorepatterns">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -16,6 +18,14 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+      android:label="ScrollUpToLoadMore"
+      android:name=".activities.ScrollUpToLoadMoreItemsActivity"
+      android:screenOrientation="portrait" />
+    <activity
+      android:label="ScrollUpAndSwipeDownToLoadMore"
+      android:name=".activities.ScrollUpAndSwipeDownToLoadMoreItemsActivity"
+      android:screenOrientation="portrait" />
   </application>
 
 </manifest>
