@@ -106,7 +106,7 @@ public class DummyItemAdapter extends RecyclerView.Adapter<ViewHolder> {
           mItems.add(null);
           notifyItemInserted(mItems.size() - 1);
         } else {
-          mItems.remove(mItems.size() - 1);
+          mItems.remove(null);
           notifyItemRemoved(mItems.size());
         }
       }
